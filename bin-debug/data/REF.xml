@@ -1,0 +1,10 @@
+<country >
+	<field zero_x="0" zero_y="0" size_x="60" size_y="60">
+		<clover id="2777" x="0" y="0" process_end="3550000" /> 
+		<sunflower id="2778" x="0" y="5" process_end="13454000" /> 
+		<potato id="2779" x="0" y="10" process_end="12560000" /> 
+		<clover id="2780" x="5" y="0" process_end="10751000" /> 
+		<sunflower id="2781" x="5" y="5" process_end="40455000" /> 
+		<potato id="2782" x="5" y="10" process_end="37761000" />
+	</field>
+ </country>
