@@ -8,6 +8,7 @@ package ru.k0t0vich.fazenda.controllers
 	import flash.events.MouseEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.filters.GlowFilter;
+	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import ru.k0t0vich.core.resource.ResourceLoader;
 	import ru.k0t0vich.core.controllers.BaseController;
@@ -16,6 +17,7 @@ package ru.k0t0vich.fazenda.controllers
 	import ru.k0t0vich.core.resource.ResourceLoaderEvent;
 	import ru.k0t0vich.fazenda.data.GameData;
 	import ru.k0t0vich.fazenda.display.WorldView;
+	import ru.k0t0vich.fazenda.resource.TileManager;
 	/**
 	 * ...
 	 * @author k0t0vich
@@ -24,7 +26,8 @@ package ru.k0t0vich.fazenda.controllers
 	{
 		private var gameData:GameData;
 		private var world:WorldView;
-		private var loader:ResourceLoader = new ResourceLoader();
+		private var urloader:URLLoader;
+		private var tileManager:TileManager;
 		
 		public function GameController(container:DisplayObjectContainer) {
 			super( container, new DataBase(),ProxySharedObject.getLocal( 'ru.k0t0vich.fazenda'));
@@ -38,41 +41,28 @@ package ru.k0t0vich.fazenda.controllers
 			container.addChild(world);
 			
 			//TODO инициализация серверного контроллера. без сервера - будет заглушка.	
+			
+			
+		
+			
+			urloader = new URLLoader();
+			urloader.addEventListener(Event.COMPLETE, onXMLLoaded);
+			urloader.load(new URLRequest("data/tiles.xml"));
+		}
+		
+		private function onXMLLoaded(e:Event):void 
+		{
+			tileManager = new TileManager(new XML(urloader.data));
+			tileManager.addEventListener(Event.COMPLETE, start);
+		}
+		
+		private function start(e:Event):void 
+		{
+			//container.addChild(new Bitmap(TileManager.getTileByName("clover_4")));
 			dataBase.addChild(gameData);
-			test();
-		}
-		
-		private function test():void
-		{
-			//loader.addEventListener(ResourceLoaderEvent.COMPLETE,test_handler)
-			loader.addEventListener(ResourceLoaderEvent.ALL_COMPLETE,test_handler)
-			loader.load("data/potato/Image 10.png");
-		}
-		
-		private function test_handler(e:ResourceLoaderEvent):void 
-		{
-			trace("GameController.test_handler > e : " + e);
-			var b1:Bitmap = ResourceLoader.getResource("data/potato/Image 10.png");
-			var b2:Bitmap = ResourceLoader.getResource("data/potato/Image 10.png");
-			world.addChild(b1);
-			var s2:Sprite = new Sprite;
-			s2.addChild(b2);
-			s2.x = 200;
-			s2.addEventListener(MouseEvent.ROLL_OVER, filter_handler);
-			s2.addEventListener(MouseEvent.ROLL_OUT, filter_out_handler);
-			world.addChild(s2);
 			
 		}
 		
-		private function filter_out_handler(e:MouseEvent):void 
-		{
-			(e.currentTarget as Sprite).filters = [];
-		}
-		
-		private function filter_handler(e:MouseEvent):void 
-		{
-			(e.currentTarget as Sprite).filters = [new GlowFilter()];
-		}
 		
 	}
 
