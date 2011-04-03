@@ -4,8 +4,8 @@ package ru.k0t0vich.fazenda
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import ru.k0t0vich.core.controllers.BaseController;
-	import ru.k0t0vich.core.data.DataBase;
+	import by.blooddy.core.controllers.BaseController;
+	import by.blooddy.core.data.DataBase;
 	import ru.k0t0vich.fazenda.controllers.GameController;
 	
 	/**

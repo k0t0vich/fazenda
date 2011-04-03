@@ -1,6 +1,6 @@
 package ru.k0t0vich.fazenda.data 
 {
-	import ru.k0t0vich.core.data.DataContainer;
+	import by.blooddy.core.data.DataContainer;
 	import ru.k0t0vich.fazenda.events.data.GameDataEvent;
 	
 	/**

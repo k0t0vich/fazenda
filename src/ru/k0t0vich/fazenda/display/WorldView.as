@@ -14,7 +14,7 @@ package ru.k0t0vich.fazenda.display
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import ru.k0t0vich.core.events.data.DataBaseEvent;
+	import by.blooddy.core.events.data.DataBaseEvent;
 	import ru.k0t0vich.fazenda.data.GameData;
 	import ru.k0t0vich.fazenda.events.data.GameDataEvent;
 	import ru.k0t0vich.fazenda.resource.TileManager;

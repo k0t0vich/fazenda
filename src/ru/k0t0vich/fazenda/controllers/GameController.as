@@ -10,11 +10,11 @@ package ru.k0t0vich.fazenda.controllers
 	import flash.filters.GlowFilter;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import ru.k0t0vich.core.resource.ResourceLoader;
-	import ru.k0t0vich.core.controllers.BaseController;
-	import ru.k0t0vich.core.data.DataBase;
-	import ru.k0t0vich.core.net.ProxySharedObject;
-	import ru.k0t0vich.core.resource.ResourceLoaderEvent;
+	import ru.k0t0vich.core.resource.BitmapLoader;
+	import by.blooddy.core.controllers.BaseController;
+	import by.blooddy.core.data.DataBase;
+	import by.blooddy.core.net.ProxySharedObject;
+	import ru.k0t0vich.core.resource.BitmapLoaderEvent;
 	import ru.k0t0vich.fazenda.data.GameData;
 	import ru.k0t0vich.fazenda.display.WorldView;
 	import ru.k0t0vich.fazenda.resource.TileManager;

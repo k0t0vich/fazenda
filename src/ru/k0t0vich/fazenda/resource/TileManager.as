@@ -8,8 +8,8 @@ package ru.k0t0vich.fazenda.resource
 	import flash.events.EventDispatcher;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import ru.k0t0vich.core.resource.ResourceLoader;
-	import ru.k0t0vich.core.resource.ResourceLoaderEvent;
+	import ru.k0t0vich.core.resource.BitmapLoader;
+	import ru.k0t0vich.core.resource.BitmapLoaderEvent;
 	/**
 	 * ...
 	 * @author k0t0vich
@@ -20,7 +20,7 @@ package ru.k0t0vich.fazenda.resource
 		private static const _HASH:Object ={};
 		private var imagePath:String;
 		
-		private var loader:ResourceLoader = new ResourceLoader();
+		private var loader:BitmapLoader = new BitmapLoader();
 		
 		private var tilesXML:XML;
 		private var tilesBitmapData:BitmapData;
@@ -31,13 +31,13 @@ package ru.k0t0vich.fazenda.resource
 		{	
 			tilesXML = xml;
 			imagePath = xml.@imagePath;
-			loader.addEventListener(ResourceLoaderEvent.COMPLETE,init)
+			loader.addEventListener(BitmapLoaderEvent.COMPLETE,init)
 			loader.load(imagePath);
 		}
 		
-		private function init(e:ResourceLoaderEvent):void 
+		private function init(e:BitmapLoaderEvent):void 
 		{
-			tilesBitmapData = ResourceLoader.getResource(imagePath).bitmapData;
+			tilesBitmapData = BitmapLoader.getResource(imagePath).bitmapData;
 			
 			var node:XML;
 			var nodes:XMLList = tilesXML..SubTexture;

@@ -3,7 +3,7 @@
 	import flash.display.Bitmap;
 	import flash.events.IOErrorEvent;
 	import flash.events.SecurityErrorEvent;
-	import ru.k0t0vich.core.resource.ResourceLoaderEvent;
+	import ru.k0t0vich.core.resource.BitmapLoaderEvent;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.events.Event;
@@ -13,20 +13,20 @@
 	/**
 	 * загружены все ресурсы из очереди
 	 */
-	[Event(name = "ALL_COMPLETE", type = "ru.k0t0vich.core.resource.ResourceLoaderEvent")]
+	[Event(name = "ALL_COMPLETE", type = "ru.k0t0vich.core.resource.BitmapLoaderEvent")]
 	
 	/**
 	 * ресурс загружен
 	 */
-	[Event(name="COMPLETE",type="ru.k0t0vich.core.resource.ResourceLoaderEvent")]
+	[Event(name="COMPLETE",type="ru.k0t0vich.core.resource.BitmapLoaderEvent")]
 	
-	public class ResourceLoader extends EventDispatcher implements IResourceLoader
+	public class BitmapLoader extends EventDispatcher implements IBitmapLoader
 	{
 		
 		private var assetQueue:Array = [];
 		private static const _HASH:Object={};
 		
-		public function ResourceLoader()
+		public function BitmapLoader()
 		{
 			super();
 			//configManager = configManagerLink;
@@ -57,7 +57,7 @@
 		}
 		
 		private function loadAsset(path: String): void {
-			trace("ResourceLoader.loadAsset > path : " + path);
+			trace("BitmapLoader.loadAsset > path : " + path);
 			var contentLoaderInfo: LoaderInfo = null;	
 			//var contentLoaderInfo: LoaderInfo;	
 			if (_HASH[path]) 
@@ -67,7 +67,7 @@
 				if (_HASH[path].content)
 				{
 				contentLoaderInfo = (_HASH[path] as Loader).contentLoaderInfo;
-				dispatchResourceLoaderEvent(contentLoaderInfo);
+				dispatchBitmapLoaderEvent(contentLoaderInfo);
 				}
 				else
 				{
@@ -90,9 +90,9 @@
 		 * Диспатчим событие при загрузке или существовании ресурса
 		 * @param	contentLoaderInfo
 		 */
-		private function dispatchResourceLoaderEvent(contentLoaderInfo:LoaderInfo=null):void
+		private function dispatchBitmapLoaderEvent(contentLoaderInfo:LoaderInfo=null):void
 		{			
-			var assetEvent: ResourceLoaderEvent = new ResourceLoaderEvent( ResourceLoaderEvent.COMPLETE );
+			var assetEvent: BitmapLoaderEvent = new BitmapLoaderEvent( BitmapLoaderEvent.COMPLETE );
 			assetEvent.contentLoaderInfo = contentLoaderInfo;
 					
 				// если картинка, то создаём новую битмап 
@@ -116,7 +116,7 @@
 			}
 			else
 			{
-				dispatchEvent(new ResourceLoaderEvent( ResourceLoaderEvent.ALL_COMPLETE)); 
+				dispatchEvent(new BitmapLoaderEvent( BitmapLoaderEvent.ALL_COMPLETE)); 
 			}
 			
 		}
@@ -154,7 +154,7 @@
 			var contentLoaderInfo: LoaderInfo = e.target as LoaderInfo;
 			contentLoaderInfo.removeEventListener(Event.COMPLETE, loadNewAssetListener);
 			contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-			dispatchResourceLoaderEvent(contentLoaderInfo);
+			dispatchBitmapLoaderEvent(contentLoaderInfo);
 			
 		}
 		
