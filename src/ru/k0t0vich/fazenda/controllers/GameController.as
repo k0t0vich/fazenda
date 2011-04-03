@@ -52,8 +52,9 @@ package ru.k0t0vich.fazenda.controllers
 		
 		private function onXMLLoaded(e:Event):void 
 		{
-			tileManager = new TileManager(new XML(urloader.data));
+			tileManager = new TileManager();
 			tileManager.addEventListener(Event.COMPLETE, start);
+			tileManager.addAtlas(new XML(urloader.data));
 		}
 		
 		private function start(e:Event):void 

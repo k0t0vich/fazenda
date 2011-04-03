@@ -27,13 +27,23 @@ package ru.k0t0vich.fazenda.resource
 		private var zeroPoint:Point = new Point();
 		
 		
-		public function TileManager(xml:XML):void
+		public function TileManager():void
 		{	
+			
+		}
+		
+		/**
+		 * Добавить атлас в хранилище
+		 * @param	xml
+		 */
+		public function addAtlas(xml:XML):void
+		{
 			tilesXML = xml;
 			imagePath = xml.@imagePath;
 			loader.addEventListener(BitmapLoaderEvent.COMPLETE,init)
 			loader.load(imagePath);
 		}
+		
 		
 		private function init(e:BitmapLoaderEvent):void 
 		{
@@ -44,39 +54,47 @@ package ru.k0t0vich.fazenda.resource
 
 			for each ( node in nodes )
 			{
-				var bmpdX:int = int( node.@x );
-				var bmpdDX:int = int( node.@dx );
-				var bmpdY:int = int( node.@y );
-				var bmpdDY:int = int( node.@dy );
-				var bmpdWidth:int = int( node.@width );
-				var bmpdHeight:int = int( node.@height );
-				var bmpdName:String = String(node.@name);
-				var bmpd:BitmapData = new BitmapData(bmpdWidth, bmpdHeight);
+				var tileX:int = int( node.@x );
+				var tileDX:int = int( node.@dx );
+				var tileY:int = int( node.@y );
+				var tileDY:int = int( node.@dy );
+				var tileWidth:int = int( node.@width );
+				var tileHeight:int = int( node.@height );
+				var tileName:String = String(node.@name);
+				var tile:BitmapData = new BitmapData(tileWidth, tileHeight);
 				
-				bmpd.copyPixels(tilesBitmapData, new Rectangle(bmpdX, bmpdY, bmpdWidth, bmpdHeight), zeroPoint);
-				_HASH[bmpdName] = {bmpd:bmpd,dx:bmpdDX,dy:bmpdDY};
+				tile.copyPixels(tilesBitmapData, new Rectangle(tileX, tileY, tileWidth, tileHeight), zeroPoint);
+				_HASH[tileName] = new TileData(tileName, tile, tileDX, tileDY);
 				
 			}
-			
+			BitmapLoader.deleteResource(imagePath);
 			dispatchEvent(new Event(Event.COMPLETE, true));
 			
 		}
 		
 		public static function getTileByName(name:String):DisplayObject
 		{
-			var bmp:Bitmap = new Bitmap(_HASH[name].bmpd as BitmapData);
-			bmp.x = -_HASH[name].dx;
-			for (var i:String in _HASH[name]) trace("key : " + i + ", value : " + _HASH[name][i]);
-			bmp.y = -_HASH[name].dy;
+			var tileData:TileData = _HASH[name] as TileData;
+			var bmp:Bitmap = new Bitmap(tileData.tile as BitmapData);
+			bmp.x = -tileData.dx;
+			bmp.y = -tileData.dy;
+			tileData.counter++;
 			return bmp;
 		}
 		
-		public static function deleteResource(path:String):void
+		public static function deleteResource(name:String,dispose:Boolean = false):void
 		{
-			delete _HASH[path];
-			_HASH[path] = null;
+			var tileData:TileData = _HASH[name] as TileData;
+			tileData.counter--;
+			if (tileData.counter == 0 && dispose)
+			{
+				tileData.dispose();
+				delete _HASH[name];
+				tileData = null;
+			}
 		}
 		
+
 	}
 
 }

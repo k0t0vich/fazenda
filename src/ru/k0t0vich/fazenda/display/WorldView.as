@@ -79,8 +79,17 @@ package ru.k0t0vich.fazenda.display
 			
 			addChild(view);
 			
-			box.fills = [new SolidColorFill(0x00FF00, .5)];
+			box.styleType = RenderStyleType.SOLID;
+			box.fills = [
+				new SolidColorFill(0xFF0000, .1),
+				new SolidColorFill(0x00FF00, .5),
+				new SolidColorFill(0x00FF00, .5),
+				new SolidColorFill(0x00FF00, .5),
+				new SolidColorFill(0x00FF00, .5),
+				new SolidColorFill(0xFF0000, .1)
+			];
 			box.setSize(CELL_SIZE, CELL_SIZE, 0);
+			box.z = 10;
 			_gameData.addEventListener(GameDataEvent.SELECT_CHANGED, checkSelectBox);
 			checkSelectBox();
 			
@@ -100,17 +109,14 @@ package ru.k0t0vich.fazenda.display
 			for (var j:int = 0; j < COL; j++) 
 			{
 				var isoSprite:IsoSprite = new IsoSprite();
-				var iName:String = nameArray[int(Math.random() * 3)] + String(int(Math.random() * 5) + 1);
-				//var iName:String = "sunflower_5";
-				
+				var iName:String = nameArray[int(Math.random() * 3)] + String(int(Math.random() * 5) + 1);			
 				var bmpd:DisplayObject = TileManager.getTileByName(iName);
-				//bmpd.x -= CELL_SIZE / 2;
 				isoSprite.sprites = [bmpd];
 				isoSprite.x = i  * CELL_SIZE;
 				isoSprite.y = j *  CELL_SIZE;
 				isoSprite.setSize(CELL_SIZE, CELL_SIZE, CELL_SIZE);
 				scene.addChild(isoSprite);
-				//return;
+
 				
 			}
 		}
@@ -119,7 +125,6 @@ package ru.k0t0vich.fazenda.display
 		public function showSelectBox():void
 		{
 			//test - потом этот бокс будет использоваться для выбора
-			//box.styleType = RenderStyleType.SHADED;
 			scene.addChild(box);
 			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMoveSelectBox, false, 0, true );
 			onMoveSelectBox();
@@ -172,7 +177,7 @@ package ru.k0t0vich.fazenda.display
 			var py:int = int(pt.y / CELL_SIZE) * CELL_SIZE;
 			if (px >= 0 && px < CELL_SIZE*ROW && py >= 0 && py < CELL_SIZE*COL)
 			{
-				box.moveTo( px ,py , 0);
+				box.moveTo( px ,py , 10);
 				view.render(true);
 			}
         }	

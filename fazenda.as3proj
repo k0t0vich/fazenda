@@ -51,7 +51,7 @@
     <element path="lib\as3isolib.v1.core.swc" />
     <element path="libs\as3isolib.v1.core.swc" />
     <element path="libs\ru.k0t0vich.core.swc" />
-    <element path="libs\core.swc" />
+    <element path="libs\by.blooddy.core.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

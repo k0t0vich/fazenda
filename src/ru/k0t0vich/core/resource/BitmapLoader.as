@@ -29,9 +29,6 @@
 		public function BitmapLoader()
 		{
 			super();
-			//configManager = configManagerLink;
-			//this.addEventListener(IOErrorEvent.IO_ERROR,ioErrorHandler);
-			//this.addEventListener(SecurityErrorEvent.SECURITY_ERROR, super.dispatchEvent);
 		}
 		
 		private function ioErrorHandler(e:IOErrorEvent):void 
@@ -165,10 +162,13 @@
 			return new Bitmap(((_HASH[path] as Loader).content as Bitmap).bitmapData);
 		}
 		
-		public static function deleteResource(path:String):void
+		public static function deleteResource(path:String, dispose:Boolean = false ):void
 		{
-			delete _HASH[path];
-			_HASH[path] = null;
+			if (dispose) {
+				(((_HASH[path] as Loader).content as Bitmap).bitmapData).dispose();
+				delete _HASH[path];
+				_HASH[path] = null;
+			}
 		}
 
 	}

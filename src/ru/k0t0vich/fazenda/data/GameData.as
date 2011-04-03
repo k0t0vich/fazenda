@@ -10,7 +10,7 @@ package ru.k0t0vich.fazenda.data
 	[Event(name="selectChanged", type="ru.k0t0vich.fazenda.events.data.GameDataEvent")]
 	public class GameData extends DataContainer
 	{
-		private var _select:Boolean=false;
+		private var _select:Boolean=true;
 		
 		
 		public function GameData() 

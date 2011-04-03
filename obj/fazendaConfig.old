@@ -22,7 +22,7 @@
     </source-path>
     <library-path append="true">
       <path-element>C:\_work\k0t0vich\fazenda\libs\as3isolib.v1.core.swc</path-element>
-      <path-element>C:\_work\k0t0vich\fazenda\libs\ru.k0t0vich.core.swc</path-element>
+      <path-element>C:\_work\k0t0vich\fazenda\libs\by.blooddy.core.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
