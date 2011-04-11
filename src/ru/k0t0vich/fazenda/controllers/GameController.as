@@ -18,6 +18,7 @@ package ru.k0t0vich.fazenda.controllers
 	import ru.k0t0vich.fazenda.data.GameData;
 	import ru.k0t0vich.fazenda.display.WorldView;
 	import ru.k0t0vich.fazenda.resource.TileManager;
+	import ru.k0t0vich.utils.Output;
 	/**
 	 * ...
 	 * @author k0t0vich
@@ -43,11 +44,12 @@ package ru.k0t0vich.fazenda.controllers
 			//TODO инициализация серверного контроллера. без сервера - будет заглушка.	
 			
 			
-		
-			
 			urloader = new URLLoader();
 			urloader.addEventListener(Event.COMPLETE, onXMLLoaded);
 			urloader.load(new URLRequest("data/tiles.xml"));
+			
+			//лог панель
+			container.addChild(new Output());
 		}
 		
 		private function onXMLLoaded(e:Event):void 

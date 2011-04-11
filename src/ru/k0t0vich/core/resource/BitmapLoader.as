@@ -35,7 +35,7 @@
 		{
 			trace("Error: " + e);
 			var contentLoaderInfo: LoaderInfo = e.target as LoaderInfo;
-			contentLoaderInfo.removeEventListener(Event.COMPLETE, loadNewAssetListener);
+			contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadNewAsset);
 			contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			loadNext();
 		}
@@ -63,16 +63,12 @@
 				// если уже загружен
 				if (_HASH[path].content)
 				{
-				contentLoaderInfo = (_HASH[path] as Loader).contentLoaderInfo;
-				dispatchBitmapLoaderEvent(contentLoaderInfo);
+					contentLoaderInfo = (_HASH[path] as Loader).contentLoaderInfo;
+					dispatchBitmapLoaderEvent(contentLoaderInfo);
 				}
 				else
 				{
-					//throw(new Error("Asset not loaded"));
-					trace("waiting");
-					waiting(path);
-					//loadNext();
-					//loadNewAsset(path);
+					waitLoadingNewAsset(path);
 				}
 			}
 			else
@@ -119,10 +115,10 @@
 		}
 		
 		
-		private function waiting(path:String):void
+		private function waitLoadingNewAsset(path:String):void
 		{
 			var loader: Loader = _HASH[path];
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadNewAssetListener);
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadNewAsset);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);	
 		}
 		
@@ -136,7 +132,7 @@
 			trace("loadNewAsset: "+path);
 			var loader: Loader = new Loader();
 			//var loader: Loader = ResourceDictionary.instance.loader;
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadNewAssetListener);
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadNewAsset);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			loader.load( new URLRequest(path) );
 			_HASH[path] = loader;
@@ -146,10 +142,10 @@
 		 * Хэндлер загрузки ресурса
 		 * @param	e
 		 */
-		private function loadNewAssetListener(e:Event):void 
+		private function onLoadNewAsset(e:Event):void 
 		{
 			var contentLoaderInfo: LoaderInfo = e.target as LoaderInfo;
-			contentLoaderInfo.removeEventListener(Event.COMPLETE, loadNewAssetListener);
+			contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadNewAsset);
 			contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			dispatchBitmapLoaderEvent(contentLoaderInfo);
 			
